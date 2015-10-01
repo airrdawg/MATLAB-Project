@@ -1,0 +1,17 @@
+%need to define AminoAcidAlphabet as a STRING before running this function
+%find built-in function that turns cell array into string
+function proteinSequence = readProtein_EDIT(AminoAcidAlphabet, givenSequence);
+correct = false;
+while ~correct
+    userSequence = givenSequence;
+        if sum(ismember(userSequence, AminoAcidAlphabet)) == length(userSequence);
+            correct = true;
+            proteinSequence = userSequence;
+        else
+            correct = false;
+        end
+    if correct == false
+        disp('Incorrect Sequence')
+    end
+end
+end
