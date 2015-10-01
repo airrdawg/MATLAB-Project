@@ -1,0 +1,34 @@
+function queryByMolecularWeight(proteins)
+
+[rows, columns] = size(proteins);
+maxRange = input('Enter maximum range of the molecular weight: ');
+minRange = input('Enter minimum range of the molecular weight: ');
+x = 0;
+while x == 0
+    disp('1. Search proteins of all species');
+    disp('2. Search proteins of specific species');
+    choice = input('How would you like to search? (enter 1 or 2) ');
+    if choice == 1
+        for i = 1:rows;
+            if proteins{i,3} > minRange && proteins{i,3} < maxRange
+                disp(proteins(i,:))
+                x = 1;
+            end
+        end
+    elseif choice == 2
+        specific = input('Which species would you like to search? ', 's');
+        if ~(strcmpi(specific, proteins(:,4)))
+            disp('Invalid species');
+        else
+            for i = 1:rows;      %only problem is when you search a protein that is in the matrix twice...
+                if proteins{i,3} > minRange && proteins{i,3} < maxRange
+                    if strcmpi(specific, proteins(i,4))
+                        disp(proteins(i,:))
+                        x = 1;
+                    end
+                end
+            end
+        end
+    end
+end
+end
