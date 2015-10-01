@@ -1,0 +1,39 @@
+function [ proteinsNEW ] = deleteProteins( proteins )
+%This function finds and deletes the entry if selected
+
+chosenProteinName = input('Enter the protein name: ','s');
+chosenSpecies = input('Enter the species: ','s');
+[Rows,Columns] = size(proteins); 
+count = 0;
+x=1;
+while x <= Rows
+    TF = strcmpi(proteins{x,1},chosenProteinName)& strcmpi(proteins{x,4},chosenSpecies);
+    if TF == 1
+        disp(proteins(x,:));
+        n = 1;
+        count = count+1;
+        while  n == 1
+            disp('Are you sure you want to permanently detele this entry?');
+            delete = input('1. Yes   2. No   : ');
+            if delete == 1
+                proteins(x,:)=[];
+                disp('Entry Deleted');
+                n = 0;
+            elseif delete == 2
+                disp('Entry Kept');
+                n = 0;
+            else
+                fprintf('Invalid choice\n\n');
+            end
+        end
+    end
+    [Rows,Columns] = size(proteins);
+    x = x+1;
+    
+end
+if count == 0
+    disp('Not found');
+end       
+proteinsNEW = proteins;
+end
+
