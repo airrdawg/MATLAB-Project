@@ -1,0 +1,35 @@
+function queryByKeyword(proteins)
+
+[rows, columns] = size(proteins);
+x = 0;
+searchKey = input('Enter one or more keyword: ', 's');
+
+while x == 0
+    disp('1. Search all species containing that keyword');
+    disp('2. Search specific species containing that keyword');
+    choice = input('How would you like to search? (enter 1 or 2) ');
+    if choice == 1
+        for i = 1:rows;
+            k = strfind(proteins{i,5}, searchKey);
+            if k == 1
+                disp(proteins(i,:))
+                x = 1;
+            end
+        end
+    elseif choice == 2
+        specific = input('Which species would you like to search? ', 's');
+        if ~(strcmpi(specific, proteins(:,4)))
+            disp('Invalid species');
+        else
+            for i = 1:rows;      %only problem is when you search a protein that is in the matrix twice...
+                k = strfind(proteins{i,5}, searchKey);
+                if k == 1
+                    if strcmpi(specific, proteins(i,4))
+                        disp(proteins(i,:))
+                        x = 1;
+                    end
+                end
+            end
+        end
+    end
+end
