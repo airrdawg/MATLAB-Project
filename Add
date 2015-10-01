@@ -1,0 +1,26 @@
+function proteinsNEW = Add(proteins, AminAcids)
+
+%Add function; input = proteins output = proteins (updated)
+AminoAcidAlphabet = char(AminAcids(:,2));          %this provides an input parameter for the readProtein function (JS 4/27)
+
+NewProteinName = input('Enter the new protein name: ','s');
+NewSpecies = input('Enter the species: ','s');
+givenSequence = input('Enter protein sequence: ', 's');                     %user inputs protein sequence for new entry (JS 4/27)
+[Rows,Columns] = size(proteins); %?
+for x = 1:Rows
+    [Rows,Columns] = size(proteins); %?
+    TF = strcmpi(proteins{x,1},NewProteinName)& strcmpi(proteins{x,4},NewSpecies);
+    if TF == 1
+        disp('Error');
+    end
+end
+if TF == 0
+    proteins{Rows+1,1} = NewProteinName; %Conversion to cell from char is not possible
+    proteins{Rows+1,4} = NewSpecies; %Conversion to cell from char is not possible
+    proteins{Rows+1,2} = readProtein(AminoAcidAlphabet, givenSequence);                        %this is the function that verifies that the sequence contains only amino acids (JS 4/27)
+    realWeight = molecularWeight(AminAcids, givenSequence);
+    proteins{Rows+1,3} = realWeight;                            %function to calculate the molecular weight (JS 4/27)
+    proteins{Rows+1,5} = input('Enter the description: ','s');
+end
+proteinsNEW = proteins;
+end
