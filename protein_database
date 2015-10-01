@@ -1,0 +1,68 @@
+% Written by: Yoran Sato
+% Date: 4/23/2015
+
+clear;
+clc;
+load('AminoAcids(1).mat'); % Variable name: AminAcids
+load('Proteins.mat'); % Variable name: proteins
+AminoAcidAlphabet = char(AminAcids(:,2));          %this provides an input parameter for the readProtein function (JS 4/27)
+
+
+i = 1;
+% Main Menu
+while i == 1
+    disp('1. Query Database');
+    disp('2. Update Database');
+    disp('3. Quit');
+    chosenMenu = input('Enter your choice [number from 1 through 3]: ');
+    
+    if chosenMenu == 1
+        QD = 1;
+        while QD == 1
+            disp('1. Query by name');
+            disp('2. Query by molecular weight');
+            disp('3. Query by keyword');
+            disp('4. Query by similar molecular weight to an input protein sequence');
+            disp('5. Exit menu');
+            chosenQuery = input('Enter your choice [number from 1 through 5]: ');
+            if chosenQuery == 1
+                %function?
+            elseif chosenQuery == 2
+                %function?
+            elseif chosenQuery == 3
+                %function?
+            elseif chosenQuery == 4
+                %function?
+            elseif chosenQuery == 5
+                QD = 0;
+            else
+                fprintf('Invalid choice\n\n');
+            end
+        end
+    elseif chosenMenu == 2
+        UD = 1;
+        while UD == 1
+            disp('1. Add');
+            disp('2. Edit');
+            disp('3. Delete');
+            disp('4. Exit menu');
+            chosenUpdate = input('Enter your choice [number from 1 through 4]: ');
+            if chosenUpdate == 1
+                %Add
+            elseif chosenUpdate == 2
+                %Edit
+            elseif chosenUpdate == 3
+                proteins = deleteProteins(proteins); %Delete: Completed
+            elseif chosenUpdate == 4
+                UD = 0;
+            else
+                fprintf('Invalid choice\n\n');
+            end
+        end
+    elseif chosenMenu == 3
+        i = 0;
+        disp('Quit selected. Program will exit');
+    else
+        fprintf('Invalid choice\n\n');
+    end
+end
