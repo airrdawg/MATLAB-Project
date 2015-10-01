@@ -1,0 +1,57 @@
+function proteinsNEW = Edit(proteins, AminAcids)
+%Updated on 4/28 by JS
+
+%find out problem when user enters incorrect string
+AminoAcidAlphabet = char(AminAcids(:,2));          %this provides an input parameter for the readProtein function (JS 4/27)
+
+%Edit function; input = proteins output = proteins (updated)
+
+chosenProteinName = input('Enter the protein name: ','s');
+chosenSpecies = input('Enter the species: ','s');
+[Rows,Columns] = size(proteins); 
+count = 0;
+x=1;
+while x <= Rows
+    TF = strcmpi(proteins{x,1},chosenProteinName)& strcmpi(proteins{x,4},chosenSpecies);
+    if TF == 1
+        disp(proteins(x,:));
+        n = 1;
+        count = count+1;
+        while  n == 1
+            disp('1. Update the protein sequence');
+            disp('2. Update the description');
+            disp('3. Update both');
+            update = input('Select an option: ');
+            if update == 1
+                givenSequence = input('Enter the updated protein sequence: ','s');
+                proteins{x,2} = readProtein_EDIT(AminoAcidAlphabet, givenSequence);                                             %need to define the variable givenSequence for the molecular weight function
+                realWeight = molecularWeight(AminAcids, givenSequence);
+                proteins{x,3} = realWeight;
+                disp('Sequence updated');
+                n = 0;
+            elseif update == 2
+                proteins{x,5}=input('Enter the updated description: ','s');
+                disp('Description updated');
+                n = 0;
+            elseif update == 3
+                givenSequence = input('Enter the updated protein sequence: ','s');
+                proteins{x,2} = readProtein_EDIT(AminoAcidAlphabet, givenSequence);                                             %need to define the variable givenSequence for the molecular weight function
+                realWeight = molecularWeight(AminAcids, givenSequence);
+                proteins{x,3} = realWeight;
+                disp('Sequence updated');
+                proteins{x,5}=input('Enter the updated description: ','s');
+                disp('Description updated');
+                n = 0;
+            else
+                fprintf('Invalid choice\n\n');
+            end
+        end
+    end
+    [Rows,Columns] = size(proteins);
+    x = x+1;
+    
+end
+if count == 0
+    disp('Not found');
+end       
+proteinsNEW = proteins;
