@@ -1,0 +1,45 @@
+function queryBySimilarWeight(proteins, AminAcids)
+
+[rows, columns] = size(proteins);
+givenSequence = input('Enter a protein sequence: ', 's');
+similarWeight = molecularWeight(AminAcids, givenSequence);
+
+percentage = input('Enter a tolerance as a decimal: ');   %weight = M + or - (M * tolerance/100)
+tolerancePlus = similarWeight + ((similarWeight * percentage)/100);
+toleranceMinus = similarWeight - ((similarWeight * percentage)/100);
+
+disp('1. Search proteins of all species');
+disp('2. Search proteins of specific species');
+choice = input('How would you like to search? (enter 1 or 2) ');
+count = 0;
+if choice == 1
+    for i = 1:rows;
+        if proteins{i,3} <= tolerancePlus && proteins{i,3} >= toleranceMinus
+            disp(proteins(i,:))
+            count = count + 1;
+        end
+    end
+    if count == 0
+    disp('Protein with similar weight not found')
+    end
+elseif choice == 2
+    specific = input('Which species would you like to search? ', 's');
+    if ~(strcmpi(specific, proteins(:,4)))
+        disp('Invalid species');
+    else
+        for i = 1:rows;      
+            if proteins{i,3} <= tolerancePlus && proteins{i,3} >= toleranceMinus
+                if strcmpi(specific, proteins(i,4))
+                    disp(proteins(i,:))
+                    count = count + 1;
+                end
+            end
+        end
+        if count == 0
+        disp('Protein with similar weight not found')
+        end
+    end
+else
+    disp('Invalid choice');
+end
+end
