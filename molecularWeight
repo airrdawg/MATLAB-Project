@@ -1,0 +1,16 @@
+function realWeight = molecularWeight(AminAcids, givenSequence)
+[rows,columns] = size(AminAcids);
+proteinWeight = 0;
+sizeAcids = length(givenSequence);
+for i = 1:sizeAcids
+    for k = 1:rows
+        if strcmpi(givenSequence(i), AminAcids(k,2))
+            weight = AminAcids(k,3);
+            addedWeight = cell2mat(weight);
+            proteinWeight = proteinWeight + addedWeight;
+        end
+    end
+end
+numOfAcids = sum(length(givenSequence));
+realWeight = proteinWeight - (18.015 * (numOfAcids - 1));     %18.015 is given water molecular weight
+end
